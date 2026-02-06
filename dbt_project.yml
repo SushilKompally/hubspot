@@ -1,7 +1,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: "salesforce"
+name: "hubspot"
 version: "1.0.0"
 config-version: 2
 
@@ -47,40 +47,40 @@ vars:
   silver_target_timestamp_col: "{{ env_var('TARGET_TIMESTAMP_COL', 'last_modified_date') }}"
 
   # for {{ var('source_database_name') }}
-  source_database_name: "salesforce_db"
+  source_database_name: "hubspot_db"
 
   
   source_instances:
-    - name: "salesforce1"
-      source_database_name: "salesforce_db"
-      source_schema_name: "salesforce1"
+    - name: "hubspot1"
+      source_database_name: "hubspot_db"
+      source_schema_name: "hubspot1"
       tool_name: "fivetran"
-    - name: "salesforce2"
-      source_database_name: "salesforce_db"
-      source_schema_name: "salesforce2"
+    - name: "hubspot2"
+      source_database_name: "hubspot_db"
+      source_schema_name: "hubspot2"
       tool_name: "stitch"
 
 models:
-  salesforce:
-    salesforce:
+  hubspot:
+    hubspot:
       silver:
-        +database:  "{{ env_var('DBT_SALESFORCE', 'SALESFORCE') }}"
+        +database:  "{{ env_var('DBT_hubspot', 'hubspot') }}"
         +schema: "{{ env_var('DBT_SILVER_SCHEMA', 'SILVER') }}"
         +materialized: "incremental"
         +on_schema_change: append_new_columns
         
         
       gold:
-        +database:  "{{ env_var('DBT_SALESFORCE', 'SALESFORCE') }}"
+        +database:  "{{ env_var('DBT_hubspot', 'hubspot') }}"
         +schema: "{{ env_var('DBT_GOLD_SCHEMA', 'TEST_GOLD') }}"
         +materialized: "incremental"
         +on_schema_change: append_new_columns
         
    
 snapshots:
-  salesforce:
-    salesforce:
-      +target_database: "{{ env_var('DBT_SALESFORCE', 'SALESFORCE') }}"
+  hubspot:
+    hubspot:
+      +target_database: "{{ env_var('DBT_hubspot', 'hubspot') }}"
       +target_schema: "{{ env_var('DBT_SNAPSHOT_SCHEMA', 'TEST_GOLD') }}"
       +strategy: timestamp
       +invalidate_hard_deletes: true
