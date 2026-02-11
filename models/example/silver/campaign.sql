@@ -54,7 +54,7 @@ cleaned as (
 final as (
 
   select
-    -- Map to requested final projection (lowercase aliases)
+    -- Map to requested final projection 
     campaign_id as hs_campaign_id,
     owner       as owner,
     end_date    as end_date,
