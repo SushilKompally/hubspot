@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: dealpipelinestages
+    description: "Silver layer table containing cleaned and standardized HubSpot deal pipeline stage master data."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_stage_id
+        data_type: varchar
+        description: "Unique identifier of the deal stage in HubSpot."
+        tests:
+          - not_null
+          - unique
+
+      # DETAILS
+      - name: label
+        data_type: varchar
+        description: "Human-readable name of the deal stage."
+
+      # RELATION
+      - name: pipeline_id
+        data_type: varchar
+        description: "Identifier of the pipeline this stage belongs to."
+        # Uncomment this relationship test after the dealpipelines model is built
+        # tests:
+        #   - relationships:
+        #       to: ref('dealpipelines')
+        #       field: hs_pipeline_id
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

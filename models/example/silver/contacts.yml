@@ -1,0 +1,116 @@
+version: 2
+
+models:
+  - name: contacts
+    description: "Silver layer table containing cleaned and standardized HubSpot contact master data."
+    config:
+      contract:
+        enforced: true
+
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_contact_id
+        data_type: varchar
+        description: "Unique identifier of the contact in HubSpot."
+        tests:
+          - not_null
+          - unique
+
+      # PERSON DETAILS
+      - name: first_name
+        data_type: varchar
+        description: "Contact's first name."
+
+      - name: middle_name
+        data_type: varchar
+        description: "Contact's middle name."
+
+      - name: last_name
+        data_type: varchar
+        description: "Contact's last name."
+
+      - name: email
+        data_type: varchar
+        description: "Primary email address of the contact."
+
+      - name: phone
+        data_type: varchar
+        description: "Primary phone number of the contact."
+
+      - name: mobile_phone
+        data_type: varchar
+        description: "Mobile phone number of the contact."
+
+      - name: lifecycle_stage
+        data_type: varchar
+        description: "HubSpot-defined lifecycle stage (e.g., subscriber, lead, MQL, SQL, opportunity, customer)."
+
+      - name: owner_id
+        data_type: varchar
+        description: "HubSpot owner (user) ID responsible for the contact."
+
+      - name: company_name
+        data_type: varchar
+        description: "Company name associated with the contact."
+
+      - name: job_title
+        data_type: varchar
+        description: "Contact's job title."
+
+      - name: lead_status
+        data_type: varchar
+        description: "Lead status of the contact, if tracked (e.g., new, open, in progress)."
+
+      # ADDRESS
+      - name: address
+        data_type: varchar
+        description: "Street address of the contact."
+
+      - name: city
+        data_type: varchar
+        description: "City of the contact's address."
+
+      - name: state
+        data_type: varchar
+        description: "State/region of the contact's address."
+
+      - name: postal_code
+        data_type: varchar
+        description: "Postal/ZIP code of the contact's address."
+
+      - name: country
+        data_type: varchar
+        description: "Country of the contact's address."
+
+      # MISC
+      - name: fax
+        data_type: varchar
+        description: "Fax number associated with the contact."
+
+      - name: timezone
+        data_type: varchar
+        description: "Timezone text of the contact (e.g., 'America/New_York')."
+
+      - name: time_zone_offset
+        data_type: number
+        description: "Numeric offset from UTC for the contact's timezone, if available."
+
+      # METRICS
+      - name: lifetime_value
+        data_type: number
+        description: "Lifetime value attributed to the contact."
+
+      # DATES
+      - name: created_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the contact record was created in HubSpot."
+
+      - name: last_modified_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the contact record was last updated in HubSpot."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

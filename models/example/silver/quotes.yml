@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: quotes
+    description: "Silver layer table containing cleaned and standardized quote data linked to deals."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_quote_id
+        data_type: varchar
+        description: "Unique identifier of the quote."
+        tests:
+          - not_null
+          - unique
+
+      # DETAILS
+      - name: name
+        data_type: varchar
+        description: "Name or title of the quote."
+
+      # RELATIONS
+      - name: deal_id
+        data_type: varchar
+        description: "Identifier of the associated deal."
+        # Uncomment after silver deals model is ready
+        # tests:
+        #   - relationships:
+        #       to: ref('deals')
+        #       field: hs_deal_id
+
+      # METRICS
+      - name: amount
+        data_type: number
+        description: "Total monetary amount for the quote (typically in portal currency)."
+
+      # STATUS
+      - name: status
+        data_type: varchar
+        description: "Current status of the quote (e.g., draft, sent, signed)."
+        # Optionally enforce allowed values:
+        # tests:
+        #   - accepted_values:
+        #       values: ['draft','sent','signed','expired','rejected','approved']
+
+      # DATES
+      - name: created_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the quote was created in the source."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

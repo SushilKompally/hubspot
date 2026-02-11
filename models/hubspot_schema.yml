@@ -1,0 +1,25 @@
+version: 2
+ 
+sources:
+  - name: hubspot_bronze
+    database:  '{{ var("source_database_name") }}'
+    schema: bronze        
+    tables:
+      - name: contacts
+        identifier: contacts
+      - name: campaign
+      - name: companies
+      - name: dealpipelines
+      - name: dealpipelinestages
+      - name: deals
+      - name: lead
+      - name: lineitems
+      - name: lead_history
+      - name: products
+      - name: owners
+      - name: quotes
+      - name: users
+      - name: tickets
+      - name: ticketpipelines
+      - name: ticketpipelinestages
+      - name: engagements

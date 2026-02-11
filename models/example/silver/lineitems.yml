@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: lineitems
+    description: "Silver layer table containing cleaned and standardized HubSpot deal line item data."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_lineitem_id
+        data_type: varchar
+        description: "Unique identifier of the line item in HubSpot."
+        tests:
+          - not_null
+          - unique
+
+      # DETAILS
+      - name: name
+        data_type: varchar
+        description: "Human-readable name/label of the line item."
+
+      # METRICS
+      - name: price
+        data_type: number
+        description: "Unit price for the line item (typically in the portal's currency)."
+
+      - name: quantity
+        data_type: number
+        description: "Number of units for the line item."
+
+      # RELATIONS
+      - name: product_id
+        data_type: varchar
+        description: "Identifier of the associated product."
+        # Uncomment when products model exists
+        # tests:
+        #   - relationships:
+        #       to: ref('products')
+        #       field: hs_product_id
+
+      - name: deal_id
+        data_type: varchar
+        description: "Identifier of the associated deal."
+        # Uncomment when deals model exists
+        # tests:
+        #   - relationships:
+        #       to: ref('deals')
+        #       field: hs_deal_id
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

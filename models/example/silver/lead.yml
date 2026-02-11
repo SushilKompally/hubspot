@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: leads
+    description: "Silver layer table containing cleaned and standardized lead master data."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_lead_id
+        data_type: varchar
+        description: "Unique identifier of the lead."
+        tests:
+          - not_null
+          - unique
+
+      # OWNERSHIP / RELATIONSHIPS
+      - name: lead_owner_id
+        data_type: varchar
+        description: "Identifier of the owner assigned to the lead."
+        # Optional FK later
+        # tests:
+        #   - relationships:
+        #       to: ref('users')
+        #       field: user_id
+
+      - name: company_id
+        data_type: varchar
+        description: "Identifier of the company associated with the lead."
+        # Optional FK later
+        # tests:
+        #   - relationships:
+        #       to: ref('companies')
+        #       field: hs_company_id
+
+      # PERSON DETAILS
+      - name: first_name
+        data_type: varchar
+        description: "First name of the lead."
+
+      - name: last_name
+        data_type: varchar
+        description: "Last name of the lead."
+
+      - name: email
+        data_type: varchar
+        description: "Email address of the lead."
+
+      - name: phone
+        data_type: varchar
+        description: "Phone number of the lead."
+
+      # STATUS / SOURCE
+      - name: status
+        data_type: varchar
+        description: "Current status of the lead (e.g., new, contacted, qualified)."
+
+      - name: source
+        data_type: varchar
+        description: "Source from which the lead was generated (e.g., web, referral, campaign)."
+
+      # DATES
+      - name: created_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the lead record was created."
+
+      - name: modified_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the lead record was last modified."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

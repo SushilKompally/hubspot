@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: engagements
+    description: "Silver layer table containing cleaned and standardized HubSpot engagement activity data (emails, calls, notes, meetings, etc.)."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_engagement_id
+        data_type: varchar
+        description: "Unique identifier of the engagement in HubSpot."
+        tests:
+          - not_null
+          - unique
+
+      # DETAILS
+      - name: engagement_type
+        data_type: varchar
+        description: "Type/category of the engagement (e.g., EMAIL, CALL, NOTE, MEETING, TASK)."
+
+
+      # DATES
+      - name: created_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the engagement was created in HubSpot."
+
+      # RELATIONSHIPS
+      - name: owner_id
+        data_type: varchar
+        description: "HubSpot owner (user) ID associated with the engagement."
+        # Uncomment when users model is available
+        # tests:
+        #   - relationships:
+        #       to: ref('users')
+        #       field: user_id
+
+      - name: contact_id
+        data_type: varchar
+        description: "HubSpot contact ID associated with the engagement."
+        # Uncomment when contacts model is available
+        # tests:
+        #   - relationships:
+        #       to: ref('contacts')
+        #       field: hs_contact_id
+
+      - name: company_id
+        data_type: varchar
+        description: "HubSpot company ID associated with the engagement."
+        # Uncomment when companies model is available
+        # tests:
+        #   - relationships:
+        #       to: ref('companies')
+        #       field: hs_company_id
+
+      # CONTENT
+      - name: subject
+        data_type: varchar
+        description: "Engagement subject or title (if applicable)."
+
+      - name: body
+        data_type: varchar
+        description: "Main content/body of the engagement (e.g., email body, note text)."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

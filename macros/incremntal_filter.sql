@@ -7,8 +7,8 @@
     target_relation=None
 ) -%}
   {# Read defaults from vars if not passed explicitly #}
-  {% set source_ts = source_ts_col or var('source_record_creation_column', 'lastmodifieddate') %}
-  {% set target_ts = target_ts_col or var('silver_target_timestamp_col', 'last_modified_date') %}
+  {% set source_ts = source_ts_col or var('source_record_creation_column', 'last_updated') %}
+  {% set target_ts = target_ts_col or var('silver_target_timestamp_col', 'last_updated') %}
   {% set lb_days   = lookback_days if lookback_days is not none else var('incremental_lookback_days', 1) %}
 
   {% if is_incremental() %}

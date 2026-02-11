@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: dealpipelines
+    description: "Silver layer table containing cleaned and standardized HubSpot deal pipeline master data."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_pipeline_id
+        data_type: varchar
+        description: "Unique identifier of the deal pipeline in HubSpot."
+        tests:
+          - not_null
+          - unique
+
+      # DETAILS
+      - name: label
+        data_type: varchar
+        description: "Human-readable name of the deal pipeline."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

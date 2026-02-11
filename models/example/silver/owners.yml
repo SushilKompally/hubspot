@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: owners
+    description: "Silver layer table containing cleaned and standardized HubSpot owner (user) master data."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_owner_id
+        data_type: varchar
+        description: "Unique identifier of the owner (user) in HubSpot."
+        tests:
+          - not_null
+          - unique
+
+      # DETAILS
+      - name: first_name
+        data_type: varchar
+        description: "First name of the owner."
+
+      - name: last_name
+        data_type: varchar
+        description: "Last name of the owner."
+
+      - name: email
+        data_type: varchar
+        description: "Email address of the owner."
+
+      - name: user_role
+        data_type: varchar
+        description: "Role assigned to the owner in HubSpot."
+
+      - name: team_id
+        data_type: varchar
+        description: "Identifier of the team the owner belongs to."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."
