@@ -48,12 +48,12 @@ cleaned as (
     {{ clean_string('company_type') }}          as company_type,
 
     -- NUMERIC
-    {{ safe_number('annualrevenue') }}          as annual_revenue,
-    {{ safe_number('numberofemployees') }}      as employee_count,
+    {{ safe_decimal('annualrevenue') }}          as annual_revenue,
+    numberofemployees     as employee_count,
 
     -- DATES / TIMESTAMPS (normalize; safe_timestamp_ntz handles blanks/invalids)
     {{ safe_timestamp_ntz('createdate') }}      as created_date,
-    {{ safe_timestamp_ntz('lastmodifieddate') }}as last_modified_date,
+    {{ safe_timestamp_ntz('lastmodifieddate') }} as last_modified_date,
 
     -- LOAD / AUDIT
     current_timestamp()::timestamp_ntz          as silver_load_date

@@ -93,7 +93,7 @@ models:
         description: "Timezone text of the contact (e.g., 'America/New_York')."
 
       - name: time_zone_offset
-        data_type: number
+        data_type: varchar
         description: "Numeric offset from UTC for the contact's timezone, if available."
 
       # METRICS
