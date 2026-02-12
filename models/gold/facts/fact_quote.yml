@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: fact_quote
+    description: >
+      Fact table representing HubSpot quote records enriched with deal dimension,
+      date keys, and financial attributes.
+    tags: [gold, hubspot, fact]
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      - name: hs_quote_id
+        description: Natural key for the quote in HubSpot.
+        data_type: number
+        tests:
+          - not_null
+          - unique
+
+      - name: deal_id
+        description: Raw deal id from source.
+        data_type: number
+
+      - name: deal_key
+        description: Foreign key referencing dim_deal.hs_deal_id.
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_deal')
+              field: hs_deal_id
+
+      - name: name
+        description: Quote title/name from HubSpot.
+        data_type: string
+
+      - name: status
+        description: Current status of the quote (e.g., Draft, Sent, Closed Won).
+        data_type: string
+
+      - name: amount
+        description: Total quoted amount.
+        data_type: float
+
+      - name: created_date_key
+        description: Date key for the quote created_date.
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+      - name: closed_date_key
+        description: Date key representing closed date (placeholder until closed_date exists).
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+      - name: gold_load_date
+        description: Timestamp when the record was loaded into gold.
+        data_type: timestamp_ntz
+
+      - name: last_modified_date
+        description: Coalesced modified/created timestamp used for incremental merge filters.
+        data_type: timestamp_ntz

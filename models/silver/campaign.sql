@@ -15,6 +15,7 @@
 {{ config(
     unique_key='campaign_id',
     incremental_strategy='merge',
+    materialized = 'table',
     pre_hook = "{{ log_model_audit(status='STARTED') }}",
     post_hook = "{{ log_model_audit(status='SUCCESS') }}"
 ) }}

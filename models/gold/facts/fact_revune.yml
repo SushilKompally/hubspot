@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: fact_revenue
+    description: >
+      Revenue fact table mapping company revenue to date keys and revenue type,
+      enriched from gold dimensions (company, date).
+    tags: [gold, hubspot, fact]
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      - name: company_key
+        description: Foreign key referencing dim_company.company_key.
+        data_type: number
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_company')
+              field: company_key
+
+      - name: date_key
+        description: Foreign key referencing dim_date.date_key based on revenue_date.
+        data_type: number
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+      - name: amount
+        description: Revenue amount for the company on the given date.
+        data_type: float
+
+      - name: revenue_type
+        description: Category or type of revenue (e.g., subscription, services).
+        data_type: string
+        tests:
+          - not_null
+
+      - name: gold_load_date
+        description: Timestamp when the record was loaded into the gold layer.
+        data_type: timestamp_ntz
+
+      - name: last_modified_date
+        description: Timestamp used for incremental MERGE filtering.
+        data_type: timestamp_ntz
