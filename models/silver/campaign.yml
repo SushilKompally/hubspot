@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: campaign
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      - name: hs_campaign_id
+        data_type: varchar
+        tests:
+          - not_null
+          - unique
+
+      - name: owner
+        data_type: varchar
+
+      - name: start_date
+        data_type: date
+
+      - name: end_date
+        data_type: date
+
+      - name: status
+        data_type: varchar
+
+      - name: goal
+        data_type: varchar
+
+      - name: silver_load_date
+        data_type: timestamp_ntz

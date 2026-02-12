@@ -1,0 +1,83 @@
+version: 2
+
+models:
+  - name: leadhistory
+    description: "Silver layer table containing cleaned and standardized lead change history (status/source/value changes, who/when changed)."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_history_id
+        data_type: varchar
+        description: "Unique identifier of the lead history record."
+        tests:
+          - not_null
+          - unique
+
+      # RELATION
+      - name: lead_id
+        data_type: varchar
+        description: "Identifier of the lead to which this history record belongs."
+        # Uncomment when leads model is available
+        # tests:
+        #   - relationships:
+        #       to: ref('leads')
+        #       field: hs_lead_id
+
+      # CHANGE ATTRIBUTES
+      - name: status
+        data_type: varchar
+        description: "Lead status after the change."
+      
+      - name: source
+        data_type: varchar
+        description: "Lead source after the change."
+
+      - name: old_value
+        data_type: varchar
+        description: "Previous value before the change."
+
+      - name: new_value
+        data_type: varchar
+        description: "New value after the change."
+
+      - name: changed_by
+        data_type: varchar
+        description: "Identifier or name of the user/system that performed the change."
+
+      - name: change_type
+        data_type: varchar
+        description: "Type/category of change (e.g., insert, update, delete, status change)."
+        # Optionally enforce allowed values:
+        # tests:
+        #   - accepted_values:
+        #       values: ['insert', 'update', 'delete', 'status_change', 'source_change']
+
+      # DATES
+      - name: change_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the change occurred."
+
+      - name: created_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the history record was created."
+
+      - name: modified_date
+        data_type: timestamp_ntz
+        description: "Timestamp representing last modification; aligned to change_date for this model."
+
+      # FLAGS
+      - name: is_current
+        data_type: boolean
+        description: "Indicates whether this history row is the current (active) state."
+
+      - name: is_deleted
+        data_type: boolean
+        description: "Indicates whether this history row has been logically deleted."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

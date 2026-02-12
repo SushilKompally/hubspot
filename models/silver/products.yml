@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: products
+    description: "Silver layer table containing cleaned and standardized product master data."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_product_id
+        data_type: varchar
+        description: "Unique identifier of the product."
+        tests:
+          - not_null
+          - unique
+
+      # DETAILS
+      - name: name
+        data_type: varchar
+        description: "Product name."
+
+      - name: sku
+        data_type: varchar
+        description: "Stock keeping unit identifier for the product."
+
+      # METRICS
+      - name: price
+        data_type: number
+        description: "Unit price of the product (typically in the portal's currency)."
+
+      # OTHER
+      - name: description
+        data_type: varchar
+        description: "Free-text description/details of the product."
+
+      # DATES
+      - name: created_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the product was created in the source."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

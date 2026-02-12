@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: deals
+    description: "Silver: HubSpot deals normalized from bronze (v62.0). Incremental MERGE by hs_deal_id."
+    config:
+      contract: { enforced: true }
+    columns:
+      - name: hs_deal_id
+        description: "Primary key of the deal (HubSpot id)."
+        data_type: string
+        tests:
+          - not_null
+          - unique
+
+      - name: deal_name
+        description: "Deal name."
+        data_type: string
+
+      - name: amount
+        description: "Deal amount in HubSpot's source currency."
+        data_type: number
+
+      - name: pipeline_id
+        description: "Pipeline identifier."
+        data_type: string
+
+      - name: stage_id
+        description: "Stage identifier within the pipeline."
+        data_type: string
+
+      - name: close_date
+        description: "Close date (date)."
+        data_type: date
+
+        # add referential integrity once dim tables exist, e.g.:
+        # tests:
+        #   - relationships:
+        #       to: ref('dim_pipeline')
+        #       field: pipeline_id
+
+      - name: created_date
+        description: "Record created timestamp."
+        data_type: timestamp_ntz
+
+      - name: last_modified_date
+        description: "Record last modified timestamp."
+        data_type: timestamp_ntz
+
+      - name: owner_id
+        description: "Owner identifier."
+        data_type: string
+
+      - name: company_id
+        description: "Associated company id."
+        data_type: string
+
+      - name: deal_type
+        description: "Deal type classification."
+        data_type: string
+
+      - name: forecast_amount
+        description: "Forecasted amount."
+        data_type: number
+
+      - name: probability
+        description: "Probability (0..1)."
+        data_type: number
+
+      - name: description
+        description: "Free-text description."
+        data_type: string
+
+      - name: silver_load_date
+        description: "Silver-layer load timestamp (audit)."
+        data_type: timestamp_ntz

@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: companies
+    description: "Silver layer table containing cleaned and standardized HubSpot company master data."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_company_id
+        data_type: varchar
+        description: "Unique identifier of the company in HubSpot."
+        tests:
+          - not_null
+          - unique
+
+      # COMPANY DETAILS
+      - name: name
+        data_type: varchar
+        description: "Name of the company."
+
+      - name: domain
+        data_type: varchar
+        description: "Primary website domain associated with the company."
+
+      - name: phone
+        data_type: varchar
+        description: "Primary phone number of the company."
+
+      - name: industry
+        data_type: varchar
+        description: "Industry classification of the company."
+
+      - name: address
+        data_type: varchar
+        description: "Street address of the company."
+
+      - name: city
+        data_type: varchar
+        description: "City where the company is located."
+
+      - name: state
+        data_type: varchar
+        description: "State or region where the company is located."
+
+      - name: postal_code
+        data_type: varchar
+        description: "Postal or ZIP code of the company address."
+
+      - name: country
+        data_type: varchar
+        description: "Country where the company is located."
+
+      - name: owner_id
+        data_type: varchar
+        description: "HubSpot owner (user) ID responsible for the company record."
+
+      - name: company_type
+        data_type: varchar
+        description: "Type or classification of the company (for example: customer, partner, prospect)."
+
+      # METRICS
+      - name: annual_revenue
+        data_type: number
+        description: "Annual revenue of the company as reported in HubSpot."
+
+      - name: employee_count
+        data_type: number
+        description: "Total number of employees working for the company."
+
+      # DATES
+      - name: created_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the company record was created in HubSpot."
+
+      - name: last_modified_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the company record was last updated in HubSpot."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: ticketpipelines
+    description: "Silver layer table containing cleaned and standardized HubSpot ticket pipeline master data."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: pipeline_id
+        data_type: varchar
+        description: "Unique identifier of the ticket pipeline in HubSpot."
+        tests:
+          - not_null
+          - unique
+
+      # DETAILS
+      - name: label
+        data_type: varchar
+        description: "Human-readable name of the ticket pipeline."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."

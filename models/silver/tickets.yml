@@ -1,0 +1,93 @@
+version: 2
+
+models:
+  - name: tickets
+    description: "Silver layer table containing cleaned and standardized HubSpot ticket data (support cases) with pipeline/stage ownership."
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      # PRIMARY KEY
+      - name: hs_ticket_id
+        data_type: varchar
+        description: "Unique identifier of the ticket in HubSpot."
+        tests:
+          - not_null
+          - unique
+
+      # DETAILS
+      - name: subject
+        data_type: varchar
+        description: "Ticket subject or title."
+
+      - name: content
+        data_type: varchar
+        description: "Ticket description or body content."
+
+      - name: priority
+        data_type: varchar
+        description: "Priority of the ticket (e.g., low, medium, high, urgent)."
+
+      - name: source
+        data_type: varchar
+        description: "Source from which the ticket originated (e.g., email, web, phone)."
+
+      - name: status
+        data_type: varchar
+        description: "Current status of the ticket (e.g., new, open, waiting, closed)."
+
+      # RELATIONSHIPS
+      - name: owner_id
+        data_type: varchar
+        description: "HubSpot owner (user) ID responsible for the ticket."
+        # Enable once owners model is ready:
+        # tests:
+        #   - relationships:
+        #       to: ref('owners')
+        #       field: hs_owner_id
+
+      - name: pipeline_id
+        data_type: varchar
+        description: "Identifier of the ticket pipeline the ticket belongs to."
+        # Enable once ticketpipelines model is ready:
+        # tests:
+        #   - relationships:
+        #       to: ref('ticketpipelines')
+        #       field: pipeline_id
+
+      - name: stage_id
+        data_type: varchar
+        description: "Identifier of the stage within the ticket pipeline."
+        # Enable once ticketpipelinestages model is ready:
+        # tests:
+        #   - relationships:
+        #       to: ref('ticketpipelinestages')
+        #       field: stage_id
+
+      - name: company_id
+        data_type: varchar
+        description: "HubSpot company ID associated with the ticket."
+        # Enable once companies model is ready:
+        # tests:
+        #   - relationships:
+        #       to: ref('companies')
+        #       field: hs_company_id
+
+      - name: contact_ids
+        data_type: varchar
+        description: "One or more associated contact IDs (often a comma-separated list)."
+
+      # DATES
+      - name: created_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the ticket record was created in HubSpot."
+
+      - name: closed_date
+        data_type: timestamp_ntz
+        description: "Timestamp when the ticket was closed, if applicable."
+
+      # AUDIT
+      - name: silver_load_date
+        data_type: timestamp_ntz
+        description: "Timestamp indicating when the record was loaded into the silver layer."
