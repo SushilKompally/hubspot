@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: fact_lead
+    description: >
+      Fact table for HubSpot leads enriched with owner and company foreign keys, lifecycle
+      attributes, and date keys (created, modified, converted). Built from silver.lead and joined
+      to gold dimensions.
+    tags: [gold, hubspot, fact]
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: hs_lead_id
+        description: Natural key of the lead from HubSpot.
+        data_type: number
+        tests:
+          - not_null
+          - unique
+
+      - name: owner_id
+        description: Foreign key to dim_owner.hs_owner_id representing the lead owner.
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_owner')
+              field: hs_owner_id
+
+      - name: company_id
+        description: Foreign key to dim_company.hs_company_id associated with the lead.
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_company')
+              field: hs_company_id
+
+      - name: status
+        description: Current status of the lead in HubSpot (e.g., New, In Progress, Converted).
+        data_type: string
+
+      - name: source
+        description: Source attribution for the lead (e.g., Web, Referral, Campaign).
+        data_type: string
+
+      - name: created_date_key
+        description: Foreign key to dim_date.date_key for the lead's created_date.
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+      - name: modified_date_key
+        description: Foreign key to dim_date.date_key for the lead's modified_date.
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+      - name: converted_date_key
+        description: Foreign key to dim_date.date_key for the lead's converted date (placeholder until explicit converted_date is available).
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+      - name: is_converted
+        description: Boolean flag indicating whether the lead is converted (status = 'Converted').
+        data_type: boolean
+
+      - name: gold_load_date
+        description: Timestamp when the record was loaded/updated into gold.
+        data_type: timestamp_ntz
+
+      - name: last_modified_date
+        description: Latest known modification timestamp from source (coalesced with created_date).
+        data_type: timestamp_ntz

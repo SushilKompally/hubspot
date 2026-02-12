@@ -1,0 +1,42 @@
+version: 2
+
+snapshots:
+  - name: dim_campaign
+    description: "SCD Type 2 snapshot for campaigns using timestamp strategy on modified_date."
+
+    columns:
+      - name: hs_campaign_id
+        description: "Natural key for the campaign in HubSpot."
+        data_type: varchar
+
+      - name: name
+        description: "Campaign owner/name field captured from source."
+        data_type: varchar
+
+      - name: status
+        description: "Current status of the campaign in source."
+        data_type: varchar
+
+      - name: start_date
+        description: "Campaign start date (raw from source)."
+        data_type: timestamp_ntz
+
+      - name: end_date
+        description: "Campaign end date (raw from source)."
+        data_type: timestamp_ntz
+
+      - name: owner_name
+        description: "Text owner from source (pre-dimensionalization)."
+        data_type: varchar
+
+      - name: modified_date
+        description: "Source system last modified timestamp used as updated_at for SCD2."
+        data_type: timestamp_ntz
+
+      - name: created_date
+        description: "Source system created timestamp."
+        data_type: timestamp_ntz
+
+      - name: silver_load_date
+        description: "ETL pipeline load timestamp into silver layer."
+        data_type: timestamp_ltz

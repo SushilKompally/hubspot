@@ -13,6 +13,7 @@
 {{ config(
     unique_key = 'hs_product_id',
     incremental_strategy = 'merge',
+    materialized = 'table',
     pre_hook = "{{ log_model_audit(status='STARTED') }}",
     post_hook = "{{ log_model_audit(status='SUCCESS') }}"
 ) }}

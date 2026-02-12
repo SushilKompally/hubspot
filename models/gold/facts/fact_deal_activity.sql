@@ -2,7 +2,10 @@
   config(
     materialized='incremental',
     incremental_strategy='merge',
-    unique_key='activity_unique_key'
+    unique_key='activity_unique_key',
+    on_schema_change='append_new_columns',
+    pre_hook="{{ log_model_audit(status='started') }}",
+    post_hook="{{ log_model_audit(status='success') }}"
   )
 }}
 

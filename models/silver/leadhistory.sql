@@ -12,6 +12,7 @@
 
 {{ config(
     unique_key = 'hs_history_id',
+    materialized = 'table',
     incremental_strategy = 'merge',
     pre_hook = "{{ log_model_audit(status='STARTED') }}",
     post_hook = "{{ log_model_audit(status='SUCCESS') }}"

@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: fact_engagement
+    description: >
+      Fact table capturing HubSpot engagements enriched with dimensional keys
+      (owner, contact, company, date) and associated entities (deal, ticket).
+      Sourced from silver.engagements and joined to gold dimensions.
+    tags: [gold, hubspot, fact]
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: hs_engagement_id
+        description: Natural key of the engagement from HubSpot.
+        data_type: number
+        tests:
+          - not_null
+          - unique
+
+      - name: owner_id
+        description: Foreign key to dim_owner.hs_owner_id representing the engagement owner.
+        data_type: number
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_owner')
+              field: hs_owner_id
+
+      - name: contact_id
+        description: Foreign key to dim_contact.hs_contact_id associated with the engagement.
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_contact')
+              field: hs_contact_id
+
+      - name: company_id
+        description: Foreign key to dim_company.hs_company_id associated with the engagement.
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_company')
+              field: hs_company_id
+
+      - name: created_date_key
+        description: Foreign key to dim_date.date_key derived from engagement created_date.
+        data_type: number
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+      - name: subject
+        description: Engagement subject/title as provided in HubSpot.
+        data_type: string
+
+      - name: notes
+        description: Engagement body/notes text.
+        data_type: string
+
+      - name: associated_deal_key
+        description: Foreign key to dim_deal.hs_deal_id associated with the engagement (if applicable).
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_deal')
+              field: hs_deal_id
+
+      - name: associated_ticket_key
+        description: Foreign key to dim_ticket.hs_ticket_id associated with the engagement (if applicable).
+        data_type: number
+        tests:
+          - relationships:
+              to: ref('dim_ticket')
+              field: hs_ticket_id
+
+      - name: last_modified_date
+        description: Latest known modification timestamp from the source (falls back to created_date if absent).
+        data_type: timestamp_ntz
