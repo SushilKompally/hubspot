@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: dim_owner
+    description: >
+      Owner dimension for HubSpot, modeled as Type 1 (current state only).
+      Built from silver.owners and enriched with a convenience full_name field.
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      - name: hs_owner_id
+        description: Natural/business key for the owner in HubSpot.
+        data_type: number
+        tests:
+          - not_null
+          - unique
+
+      - name: first_name
+        description: Owner first name.
+        data_type: string
+
+      - name: last_name
+        description: Owner last name.
+        data_type: string
+
+      - name: email
+        description: Owner email address.
+        data_type: string
+
+      - name: team_id
+        description: Team identifier from source (map to a team dimension if available).
+        data_type: string
+
+      - name: full_name
+        description: Conveniencefeild concatenation of first_name and last_name.
+        data_type: string
+
+      - name: gold_load_date
+        description: Timestamp when the record was written to the gold layer.
+        data_type: timestamp_ntz
+
+      - name: last_modified_date
+        description: Coalesced source timestamp used for incremental merge filtering.
+        data_type: timestamp_ntz

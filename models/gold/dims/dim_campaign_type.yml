@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: dim_campaign_type
+    description: >
+      Campaign Type dimension that stores the distinct list of campaign types
+      found in HubSpot. Type 1 dimension (current values only).
+
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      - name: name
+        description: "Unique campaign type name from HubSpot campaigns."
+        data_type: varchar
+        tests:
+          - not_null
+          - unique
+
+      - name: gold_load_date
+        description: "Timestamp when the record was loaded into the gold layer."
+        data_type: timestamp_ntz
+
+      - name: last_modified_date
+        description: "Used for incremental merge filtering (fallback from source timestamps)."
+        data_type: timestamp_ntz

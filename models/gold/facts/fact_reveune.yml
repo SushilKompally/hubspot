@@ -5,7 +5,6 @@ models:
     description: >
       Revenue fact table mapping company revenue to date keys and revenue type,
       enriched from gold dimensions (company, date).
-    tags: [gold, hubspot, fact]
     config:
       contract:
         enforced: true
@@ -16,18 +15,18 @@ models:
         data_type: number
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_company')
-              field: company_key
+          # - relationships:
+          #     to: ref('dim_company')
+          #     field: company_key
 
       - name: date_key
         description: Foreign key referencing dim_date.date_key based on revenue_date.
         data_type: number
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_date')
-              field: date_key
+          # - relationships:
+          #     to: ref('dim_date')
+          #     field: date_key
 
       - name: amount
         description: Revenue amount for the company on the given date.

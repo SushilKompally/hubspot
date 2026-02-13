@@ -1,0 +1,66 @@
+version: 2
+
+snapshots:
+  - name: dim_company
+    description: "SCD Type 2 snapshot for HubSpot companies using timestamp strategy on last_modified_date."
+
+    columns:
+      - name: hs_company_id
+        description: "Natural/business key of the company in HubSpot."
+        data_type: varchar
+
+      - name: name
+        description: "Company name."
+        data_type: varchar
+
+      - name: domain
+        description: "Company website domain."
+        data_type: varchar
+
+      - name: phone
+        description: "Primary phone number."
+        data_type: varchar
+
+      - name: industry
+        description: "Industry classification."
+        data_type: varchar
+
+      - name: address
+        description: "Street address."
+        data_type: varchar
+
+      - name: city
+        description: "City."
+        data_type: varchar
+
+      - name: state
+        description: "State or province."
+        data_type: varchar
+
+      - name: postal_code
+        description: "Postal or ZIP code."
+        data_type: varchar
+
+      - name: country
+        description: "Country."
+        data_type: varchar
+
+      - name: owner_id
+        description: "Owner natural key from source (maps to dim_owner.hs_owner_id)."
+        data_type: varchar
+
+      - name: lifecycle_stage
+        description: "Lifecycle stage for the company (e.g., Subscriber, Lead, Customer)."
+        data_type: varchar
+
+      - name: last_modified_date
+        description: "Source system last modified timestamp used as updated_at for SCD2."
+        data_type: timestamp_ntz
+
+      - name: created_date
+        description: "Source system created timestamp."
+        data_type: timestamp_ntz
+
+      - name: silver_load_date
+        description: "ETL pipeline load timestamp into silver layer."
+        data_type: timestamp_ltz

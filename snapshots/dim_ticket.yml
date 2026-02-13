@@ -1,0 +1,58 @@
+version: 2
+
+snapshots:
+  - name: dim_ticket
+    description: "SCD Type 2 snapshot for HubSpot tickets using timestamp strategy on last_modified_date."
+
+    columns:
+      - name: hs_ticket_id
+        description: "Natural/business key for the ticket in HubSpot."
+        data_type: varchar
+
+      - name: subject
+        description: "Ticket subject/title."
+        data_type: varchar
+
+      - name: created_date
+        description: "Raw created timestamp from source."
+        data_type: timestamp_ntz
+
+      - name: closed_date
+        description: "Raw closed timestamp from source."
+        data_type: timestamp_ntz
+
+      - name: owner_id
+        description: "Raw owner id from source (later maps to dim_owner)."
+        data_type: varchar
+
+      - name: pipeline_id
+        description: "Raw ticket pipeline id from source (later maps to a pipeline dimension)."
+        data_type: varchar
+
+      - name: stage_id
+        description: "Raw ticket pipeline stage id from source (maps to stage dimension)."
+        data_type: varchar
+
+      - name: priority
+        description: "Ticket priority (e.g., low, medium, high)."
+        data_type: varchar
+
+      - name: status
+        description: "Ticket status in HubSpot."
+        data_type: varchar
+
+      - name: company_id
+        description: "Raw company id from source (maps to dim_company)."
+        data_type: varchar
+
+      - name: last_modified_date
+        description: "Source system last modified timestamp used as updated_at for SCD Type 2 snapshot."
+        data_type: timestamp_ntz
+
+      - name: created_timestamp
+        description: "Alias kept for lineage/audit alongside created_date if desired."
+        data_type: timestamp_ntz
+
+      - name: silver_load_date
+        description: "Pipeline load timestamp into silver."
+        data_type: timestamp_ltz
