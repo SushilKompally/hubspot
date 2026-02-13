@@ -34,7 +34,7 @@ with final as (
         -- incremental filter column
         h.change_date as last_modified_date
 
-    from {{ ref('lead_history') }} h
+    from {{ ref('leadhistory') }} h
 
     left join {{ ref('fact_lead') }} l
       on h.lead_id = l.hs_lead_id

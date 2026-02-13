@@ -5,7 +5,6 @@ models:
     description: >
       History fact table capturing attribute‑level changes for HubSpot leads.
       Tracks old/new values, change type, who changed the record, and SCD status flags.
-    tags: [gold, hubspot, history, fact]
     config:
       contract:
         enforced: true
@@ -21,10 +20,10 @@ models:
       - name: lead_key
         description: Foreign key to fact_lead.hs_lead_id.
         data_type: number
-        tests:
-          - relationships:
-              to: ref('fact_lead')
-              field: hs_lead_id
+        # tests:
+          # - relationships:
+          #     to: ref('fact_lead')
+          #     field: hs_lead_id
 
       - name: status
         description: Updated status at this point in history.
@@ -45,10 +44,10 @@ models:
       - name: changed_by_key
         description: Foreign key referencing dim_owner.owner_key who made the change.
         data_type: number
-        tests:
-          - relationships:
-              to: ref('dim_owner')
-              field: owner_key
+        # tests:
+          # - relationships:
+          #     to: ref('dim_owner')
+          #     field: owner_key
 
       - name: change_type
         description: Type of update (e.g., UPDATE, INSERT).

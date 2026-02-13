@@ -1,0 +1,58 @@
+version: 2
+
+snapshots:
+  - name: dim_contact
+    description: "SCD Type 2 snapshot for HubSpot contacts using timestamp strategy on last_modified_date."
+
+    columns:
+      - name: hs_contact_id
+        description: "Unique natural key for the contact in HubSpot."
+        data_type: varchar
+
+      - name: first_name
+        data_type: varchar
+        description: "First name of the contact."
+
+      - name: middle_name
+        data_type: varchar
+        description: "Middle name of the contact."
+
+      - name: last_name
+        data_type: varchar
+        description: "Last name of the contact."
+
+      - name: email
+        data_type: varchar
+        description: "Primary email address."
+
+      - name: phone
+        data_type: varchar
+        description: "Primary phone number."
+
+      - name: mobile_phone
+        data_type: varchar
+        description: "Mobile phone number."
+
+      - name: lifecycle_stage
+        data_type: varchar
+        description: "Lifecycle stage of the contact (Lead, Marketing Qualified, etc.)."
+
+      - name: owner_id
+        data_type: varchar
+        description: "Raw owner ID from source (maps later to dim_owner)."
+
+      - name: company_name
+        data_type: varchar
+        description: "Company name associated with the contact."
+
+      - name: last_modified_date
+        data_type: timestamp_ntz
+        description: "Timestamp used by dbt as updated_at for SCD Type 2 snapshot."
+
+      - name: created_date
+        data_type: timestamp_ntz
+        description: "Original created date from HubSpot."
+
+      - name: silver_load_date
+        data_type: timestamp_ltz
+        description: "Pipeline load timestamp into silver layer."

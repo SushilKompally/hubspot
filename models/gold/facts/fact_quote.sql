@@ -33,9 +33,9 @@ with final as (
     left join {{ ref('dim_deal') }} dd
       on sl.deal_id = dd.hs_deal_id
      and dd.is_current = true
-    left join {{ ref('dim_date') }} d1
+    left join {{ ref('dim_dates') }} d1
       on d1.calendar_date = cast(sl.created_date as date)
-    left join {{ ref('dim_date') }} d2
+    left join {{ ref('dim_dates') }} d2
       on d2.calendar_date = cast(sl.created_date as date)
     {% if is_incremental() %}
       where coalesce(sl.modified_date, sl.created_date) >

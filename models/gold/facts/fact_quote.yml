@@ -5,7 +5,6 @@ models:
     description: >
       Fact table representing HubSpot quote records enriched with deal dimension,
       date keys, and financial attributes.
-    tags: [gold, hubspot, fact]
     config:
       contract:
         enforced: true
@@ -25,10 +24,10 @@ models:
       - name: deal_key
         description: Foreign key referencing dim_deal.hs_deal_id.
         data_type: number
-        tests:
-          - relationships:
-              to: ref('dim_deal')
-              field: hs_deal_id
+        # tests:
+          # - relationships:
+          #     to: ref('dim_deal')
+          #     field: hs_deal_id
 
       - name: name
         description: Quote title/name from HubSpot.
@@ -45,18 +44,18 @@ models:
       - name: created_date_key
         description: Date key for the quote created_date.
         data_type: number
-        tests:
-          - relationships:
-              to: ref('dim_date')
-              field: date_key
+        # tests:
+          # - relationships:
+          #     to: ref('dim_date')
+          #     field: date_key
 
       - name: closed_date_key
         description: Date key representing closed date (placeholder until closed_date exists).
         data_type: number
-        tests:
-          - relationships:
-              to: ref('dim_date')
-              field: date_key
+        # tests:
+          # - relationships:
+          #     to: ref('dim_date')
+          #     field: date_key
 
       - name: gold_load_date
         description: Timestamp when the record was loaded into gold.

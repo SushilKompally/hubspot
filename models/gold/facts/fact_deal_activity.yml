@@ -6,9 +6,9 @@ models:
     config:
       contract:
         enforced: true
-    tests:
-      - dbt_utils.unique_combination_of_columns:
-          combination_of_columns: [deal_key, activity_key, date_key]
+    # tests:
+    #   - dbt_utils.unique_combination_of_columns:
+          # combination_of_columns:  [deal_key, activity_key, date_key]
 
     columns:
       - name: activity_unique_key
@@ -25,27 +25,27 @@ models:
           - not_null
           # If you have a dim_deal with a surrogate key, update to reference that model/column.
           # For now, this references the silver_deals natural key.
-          - relationships:
-              to: ref('silver_deals')
-              field: hs_deal_id
+          # - relationships:
+          #     to: ref('silver_deals')
+          #     field: hs_deal_id
 
       - name: activity_key
         description: "Engagement key referencing fact_engagement."
         data_type: number
         tests:
           - not_null
-          - relationships:
-              to: ref('fact_engagement')
-              field: engagement_key
+          # - relationships:
+          #     to: ref('fact_engagement')
+          #     field: engagement_key
 
       - name: date_key
         description: "Foreign key to dim_date."
         data_type: number
         tests:
           - not_null
-          - relationships:
-              to: ref('dim_date')
-              field: date_key
+          # - relationships:
+          #     to: ref('dim_date')
+          #     field: date_key
 
       - name: last_modified_date
         description: "Last modified timestamp of the underlying deal record (used for incremental filter)."

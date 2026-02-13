@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: dim_dealpipeline
+    description: >
+      Deal Pipeline dimension for HubSpot. Stores unique pipeline definitions
+      from silver.dealpipelines as a Type‑1 dimension.
+
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      - name: hs_pipeline_id
+        description: "Natural/business key representing the HubSpot pipeline ID."
+        data_type: varchar
+        tests:
+          - not_null
+          - unique
+
+      - name: label
+        description: "Human‑readable pipeline label/name from HubSpot."
+        data_type: varchar
+
+      - name: gold_load_date
+        description: "Timestamp when the record was updated or inserted in gold."
+        data_type: timestamp_ntz
+
+      - name: last_modified_date
+        description: "Coalesced timestamp used for incremental merge filtering."
+        data_type: timestamp_ntz

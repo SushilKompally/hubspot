@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: dim_engagement_type
+    description: >
+      Dimension storing distinct HubSpot engagement types (e.g., EMAIL, NOTE, CALL).
+      Implemented as a Type‑1 dimension refreshed incrementally.
+
+    config:
+      contract:
+        enforced: true
+
+    columns:
+      - name: name
+        description: "Distinct engagement type from silver.engagements."
+        data_type: varchar
+        tests:
+          - not_null
+          - unique
+
+      - name: gold_load_date
+        description: "Timestamp of the latest load or merge into the gold dimension."
+        data_type: timestamp_ntz
+
+      - name: last_modified_date
+        description: "Source modification timestamp used for incremental MERGE filtering."
+        data_type: timestamp_ntz

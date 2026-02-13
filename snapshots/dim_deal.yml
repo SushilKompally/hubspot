@@ -1,0 +1,58 @@
+version: 2
+
+snapshots:
+  - name: dim_deal
+    description: "SCD Type 2 snapshot for HubSpot deals using timestamp strategy on last_modified_date."
+
+    columns:
+      - name: hs_deal_id
+        description: "Natural/business key of the deal in HubSpot."
+        data_type: varchar
+
+      - name: deal_name
+        description: "Deal name/title."
+        data_type: varchar
+
+      - name: amount
+        description: "Deal amount from source."
+        data_type: float
+
+      - name: pipeline_id
+        description: "Raw pipeline identifier from source (maps to dim_dealpipeline)."
+        data_type: varchar
+
+      - name: stage_id
+        description: "Raw stage identifier from source (maps to dim_pipeline_stage)."
+        data_type: varchar
+
+      - name: owner_id
+        description: "Raw owner identifier from source (maps to dim_owner)."
+        data_type: varchar
+
+      - name: company_id
+        description: "Raw company identifier from source (maps to dim_company)."
+        data_type: varchar
+
+      - name: deal_type
+        description: "Deal type/category from source."
+        data_type: varchar
+
+      - name: probability
+        description: "Win probability percentage/decimal from source."
+        data_type: float
+
+      - name: close_date
+        description: "Raw close date timestamp from source."
+        data_type: timestamp_ntz
+
+      - name: created_date
+        description: "Raw created date timestamp from source."
+        data_type: timestamp_ntz
+
+      - name: last_modified_date
+        description: "Source system last modified timestamp used as updated_at for SCD2."
+        data_type: timestamp_ntz
+
+      - name: silver_load_date
+        description: "ETL pipeline load timestamp into silver."
+        data_type: timestamp_ltz
