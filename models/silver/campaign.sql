@@ -45,6 +45,7 @@ cleaned as (
     -- DATES
     {{ safe_date('start_date') }} as start_date,
     {{ safe_date('end_date') }} as end_date,
+    {{ safe_date('last_updated') }} as last_modified_date,
 
     -- LOAD / AUDIT
     current_timestamp()::timestamp_ntz as silver_load_date
@@ -62,6 +63,7 @@ final as (
     start_date  as start_date,
     status      as status,
     goal        as goal,
+    last_modified_date as last_modified_date, 
     silver_load_date as silver_load_date
   from cleaned
 )

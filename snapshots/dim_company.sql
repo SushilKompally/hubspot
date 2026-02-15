@@ -24,7 +24,7 @@ select
     postal_code,
     country,
     owner_id,          
-    lifecycle_stage,
+  
 
     -- audit fields from source
     last_modified_date, 

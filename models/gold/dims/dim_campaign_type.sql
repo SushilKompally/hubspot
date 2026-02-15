@@ -12,14 +12,14 @@
 with src as (
     select
         distinct
-        c.type        as name,
+        c.status        as name,
         current_timestamp() as gold_load_date,
 
         -- incremental tracking
-        coalesce(c.last_modified_date, c.created_date, c.silver_load_date) as last_modified_date
+        c.silver_load_date as last_modified_date
 
-    from {{ ref('campaigns') }} c
-    where c.type is not null
+from {{ ref('campaign') }} c
+    where c.status is not null
 )
 
 select

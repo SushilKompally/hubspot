@@ -38,11 +38,11 @@ with final as (
 
     left join {{ ref('dim_owner') }} o
       on sl.lead_owner_id = o.hs_owner_id
-     and o.is_current = true
+     
 
     left join {{ ref('dim_company') }} c
       on sl.company_id = c.hs_company_id
-     and c.is_current = true
+     
 
     left join {{ ref('dim_dates') }} dd1
       on dd1.calendar_date = cast(sl.created_date as date)

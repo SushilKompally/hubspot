@@ -30,3 +30,6 @@ models:
 
       - name: silver_load_date
         data_type: timestamp_ntz
+
+      - name: last_modified_date
+        data_type: date

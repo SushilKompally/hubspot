@@ -24,7 +24,7 @@ models:
 
       - name: gold_load_date
         description: "Timestamp when the record was updated or inserted in gold."
-        data_type: timestamp_ntz
+        data_type: timestamp_ltz
 
       - name: last_modified_date
         description: "Coalesced timestamp used for incremental merge filtering."

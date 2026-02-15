@@ -13,7 +13,7 @@ with final as (
     select
         se.hs_engagement_id,
 
-        -- dims (natural keys -> fk columns in fact)
+        -- dims
         o.hs_owner_id      as owner_id,
         c.hs_contact_id    as contact_id,
         co.hs_company_id   as company_id,
@@ -23,32 +23,36 @@ with final as (
         se.subject,
         se.body            as notes,
 
-        -- associated fks (if available)
+        -- associated fks
         d.hs_deal_id       as associated_deal_key,
         t.hs_ticket_id     as associated_ticket_key,
 
-        -- audit
-        coalesce(se.last_modified_date, se.created_date) as last_modified_date
+        -- audit / watermark
+        se.created_date,
+        o.last_modified_date   as last_modified_date
 
     from {{ ref('engagements') }} se
     left join {{ ref('dim_owner') }}   o
-      on se.owner_id   = o.hs_owner_id and o.is_current = true
+      on se.owner_id   = o.hs_owner_id 
     left join {{ ref('dim_contact') }} c
-      on se.contact_id = c.hs_contact_id and c.is_current = true
+      on se.contact_id = c.hs_contact_id 
     left join {{ ref('dim_company') }} co
-      on se.company_id = co.hs_company_id and co.is_current = true
+      on se.company_id = co.hs_company_id 
     left join {{ ref('dim_dates') }} dd
       on dd.calendar_date = cast(se.created_date as date)
     left join {{ ref('dim_deal') }} d
-      on se.owner_id = d.owner_id and d.is_current = true
+      on se.owner_id = d.owner_id
     left join {{ ref('dim_ticket') }} t
-      on se.owner_id = t.owner_id and t.is_current = true
+      on se.owner_id = t.owner_id 
 
     {% if is_incremental() %}
-      where coalesce(se.last_modified_date, se.created_date) >
+      where o.last_modified_date >
         (
-          select coalesce(max(last_modified_date), '1900-01-01'::timestamp_ntz)
-          from {{ this }}
+          select coalesce(
+              max(tgt.last_modified_date),
+              '1900-01-01'::timestamp_ntz
+          )
+          from {{ this }} tgt
         )
     {% endif %}
 )

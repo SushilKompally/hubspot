@@ -1,27 +1,39 @@
 version: 2
 
 models:
-  - name: dim_engagement_type
+  - name: dim_pipeline_stage
     description: >
-      Dimension storing distinct HubSpot engagement types (e.g., EMAIL, NOTE, CALL).
-      Implemented as a Type‑1 dimension refreshed incrementally.
+      Deal Pipeline Stage dimension for HubSpot. Stores unique pipeline stage
+      definitions (stage id, label, pipeline id, probability) as a Type‑1 dimension.
 
     config:
       contract:
         enforced: true
 
     columns:
-      - name: name
-        description: "Distinct engagement type from silver.engagements."
+      - name: hs_stage_id
+        description: "Natural key of the pipeline stage in HubSpot."
         data_type: varchar
         tests:
           - not_null
           - unique
 
+      - name: label
+        description: "Stage label/name (e.g., Prospecting, Closed Won)."
+        data_type: varchar
+
+      - name: pipeline_id
+        description: "Pipeline ID this stage belongs to."
+        data_type: varchar
+
+      # - name: probability
+      #   description: "Win probability percentage assigned to this stage."
+      #   data_type: number
+
       - name: gold_load_date
-        description: "Timestamp of the latest load or merge into the gold dimension."
-        data_type: timestamp_ntz
+        description: "Timestamp when this record was loaded into the gold layer."
+        data_type: timestamp_ltz
 
       - name: last_modified_date
-        description: "Source modification timestamp used for incremental MERGE filtering."
+        description: "Coalesced source timestamp used for incremental merge filtering."
         data_type: timestamp_ntz

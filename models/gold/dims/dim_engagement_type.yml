@@ -20,7 +20,7 @@ models:
 
       - name: gold_load_date
         description: "Timestamp of the latest load or merge into the gold dimension."
-        data_type: timestamp_ntz
+        data_type: timestamp_ltz
 
       - name: last_modified_date
         description: "Source modification timestamp used for incremental MERGE filtering."
