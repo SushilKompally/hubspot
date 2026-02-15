@@ -14,16 +14,15 @@ select
     hs_campaign_id,
 
     -- attributes
-    owner            as name,
+    goal,
     status,
     start_date,
     end_date,
     owner            as owner_name,
 
     -- audit fields from source
-    modified_date,
-    created_date,
-    silver_load_date
+    silver_load_date,
+    last_modified_date
 
 from {{ ref("campaign") }}
 

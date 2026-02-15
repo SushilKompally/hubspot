@@ -12,18 +12,18 @@ models:
     columns:
       - name: hs_quote_id
         description: Natural key for the quote in HubSpot.
-        data_type: number
+        data_type: varchar
         tests:
           - not_null
           - unique
 
       - name: deal_id
         description: Raw deal id from source.
-        data_type: number
+        data_type: varchar
 
       - name: deal_key
         description: Foreign key referencing dim_deal.hs_deal_id.
-        data_type: number
+        data_type: varchar
         # tests:
           # - relationships:
           #     to: ref('dim_deal')
@@ -39,7 +39,7 @@ models:
 
       - name: amount
         description: Total quoted amount.
-        data_type: float
+        data_type: number
 
       - name: created_date_key
         description: Date key for the quote created_date.
@@ -59,7 +59,7 @@ models:
 
       - name: gold_load_date
         description: Timestamp when the record was loaded into gold.
-        data_type: timestamp_ntz
+        data_type: timestamp_ltz
 
       - name: last_modified_date
         description: Coalesced modified/created timestamp used for incremental merge filters.

@@ -32,4 +32,3 @@ select
 from {{ ref("contacts") }}
 
 {% endsnapshot %}
-``

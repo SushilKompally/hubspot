@@ -12,14 +12,14 @@ models:
     columns:
       - name: hs_history_id
         description: Unique identifier of the lead history record from HubSpot.
-        data_type: number
+        data_type: varchar
         tests:
           - not_null
           - unique
 
       - name: lead_key
         description: Foreign key to fact_lead.hs_lead_id.
-        data_type: number
+        data_type: varchar
         # tests:
           # - relationships:
           #     to: ref('fact_lead')
@@ -41,10 +41,10 @@ models:
         description: Value after the change occurred.
         data_type: string
 
-      - name: changed_by_key
-        description: Foreign key referencing dim_owner.owner_key who made the change.
-        data_type: number
-        # tests:
+      # - name: changed_by_key
+      #   description: Foreign key referencing dim_owner.owner_key who made the change.
+      #   data_type: number
+      #   # tests:
           # - relationships:
           #     to: ref('dim_owner')
           #     field: owner_key
@@ -73,7 +73,7 @@ models:
 
       - name: valid_from
         description: Load timestamp when this record entered the gold layer.
-        data_type: timestamp_ntz
+        data_type: timestamp_ltz
 
       - name: last_modified_date
         description: Used for incremental MERGE filtering.

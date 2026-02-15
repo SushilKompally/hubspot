@@ -91,3 +91,7 @@ models:
       - name: silver_load_date
         data_type: timestamp_ntz
         description: "Timestamp indicating when the record was loaded into the silver layer."
+
+      - name: last_modified_date
+        data_type: date
+        description: "Timestamp indicating when the record was changed into the silver layer." 

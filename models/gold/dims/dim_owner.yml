@@ -12,7 +12,7 @@ models:
     columns:
       - name: hs_owner_id
         description: Natural/business key for the owner in HubSpot.
-        data_type: number
+        data_type: varchar
         tests:
           - not_null
           - unique
@@ -39,7 +39,7 @@ models:
 
       - name: gold_load_date
         description: Timestamp when the record was written to the gold layer.
-        data_type: timestamp_ntz
+        data_type: timestamp_ltz
 
       - name: last_modified_date
         description: Coalesced source timestamp used for incremental merge filtering.

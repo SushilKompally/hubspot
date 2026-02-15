@@ -26,8 +26,7 @@ with src as (
         -- lineage
         current_timestamp() as gold_load_date,
 
-        -- for incremental merge filter
-        coalesce(last_modified_date, modified_date, created_date, silver_load_date) as last_modified_date
+        silver_load_date as last_modified_date
 
     from {{ ref('owners') }}
 )

@@ -27,18 +27,19 @@ with final as (
         d1.date_key as created_date_key,
         d2.date_key as closed_date_key,   
         -- incremental filter
-        coalesce(sl.modified_date, sl.created_date) as last_modified_date
+        sl.created_date as last_modified_date,
+        current_timestamp() as gold_load_date,
+
 
     from {{ ref('quotes') }} sl
     left join {{ ref('dim_deal') }} dd
       on sl.deal_id = dd.hs_deal_id
-     and dd.is_current = true
     left join {{ ref('dim_dates') }} d1
       on d1.calendar_date = cast(sl.created_date as date)
     left join {{ ref('dim_dates') }} d2
       on d2.calendar_date = cast(sl.created_date as date)
     {% if is_incremental() %}
-      where coalesce(sl.modified_date, sl.created_date) >
+      where sl.created_date >
         (
           select coalesce(max(last_modified_date), '1900-01-01'::timestamp_ntz)
           from {{ this }}

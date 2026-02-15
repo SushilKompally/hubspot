@@ -16,9 +16,7 @@ with src as (
         
         current_timestamp() as gold_load_date,
 
-        -- handle timestamp drift in silver
-        coalesce(dp.last_modified_date, dp.modified_date, dp.created_date, dp.silver_load_date)
-            as last_modified_date
+        dp.silver_load_date   as last_modified_date
 
     from {{ ref('dealpipelines') }} dp
 )

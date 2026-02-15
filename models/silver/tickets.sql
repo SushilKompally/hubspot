@@ -54,6 +54,8 @@ cleaned as (
     -- DATES / TIMESTAMPS
     {{ safe_timestamp_ntz('createdate') }}       as created_date,
     {{ safe_timestamp_ntz('closedate') }}        as closed_date,
+    {{ safe_date('last_updated') }} as last_modified_date,
+    
 
     -- LOAD / AUDIT
     current_timestamp()::timestamp_ntz           as silver_load_date
@@ -77,7 +79,8 @@ final as (
     company_id        as company_id,
     contact_ids       as contact_ids,
     status            as status,
-    silver_load_date  as silver_load_date
+    silver_load_date  as silver_load_date,
+    last_modified_date as last_modified_date
   from cleaned
 )
 

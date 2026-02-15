@@ -15,9 +15,7 @@ with src as (
         e.engagement_type as name,
         current_timestamp() as gold_load_date,
 
-        -- incremental filter
-        coalesce(e.last_modified_date, e.modified_date, e.created_date, e.silver_load_date)
-            as last_modified_date
+        e.silver_load_date     as last_modified_date
 
     from {{ ref('engagements') }} e
     where e.engagement_type is not null

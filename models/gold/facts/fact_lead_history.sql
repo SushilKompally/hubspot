@@ -19,7 +19,7 @@ with final as (
         h.source,
         h.old_value,
         h.new_value,
-        o.owner_key        as changed_by_key,
+        ---o.owner_key        as changed_by_key,
         h.change_type,
         h.change_date,
         h.created_date,
@@ -39,7 +39,7 @@ with final as (
     left join {{ ref('fact_lead') }} l
       on h.lead_id = l.hs_lead_id
 
-    left join {{ ref('dim_owner') }} o
+    left join  {{ ref('dim_owner') }} o
       on h.changed_by = o.hs_owner_id
 
     {% if is_incremental() %}
@@ -58,7 +58,7 @@ select
     source,
     old_value,
     new_value,
-    changed_by_key,
+   -- changed_by_key,
     change_type,
     change_date,
     created_date,

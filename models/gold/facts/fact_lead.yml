@@ -12,14 +12,14 @@ models:
     columns:
       - name: hs_lead_id
         description: Natural key of the lead from HubSpot.
-        data_type: number
+        data_type: varchar
         tests:
           - not_null
           - unique
 
       - name: owner_id
         description: Foreign key to dim_owner.hs_owner_id representing the lead owner.
-        data_type: number
+        data_type: varchar
         # tests:
           # - relationships:
           #     to: ref('dim_owner')
@@ -27,7 +27,7 @@ models:
 
       - name: company_id
         description: Foreign key to dim_company.hs_company_id associated with the lead.
-        data_type: number
+        data_type: varchar
         # tests:
           # - relationships:
               # to: ref('dim_company')
@@ -71,7 +71,7 @@ models:
 
       - name: gold_load_date
         description: Timestamp when the record was loaded/updated into gold.
-        data_type: timestamp_ntz
+        data_type: timestamp_ltz
 
       - name: last_modified_date
         description: Latest known modification timestamp from source (coalesced with created_date).
