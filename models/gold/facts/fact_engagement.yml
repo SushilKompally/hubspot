@@ -13,15 +13,15 @@ models:
       - name: hs_engagement_id
         description: Natural key of the engagement from HubSpot.
         data_type: varchar
-        # tests:
-        #   - not_null
-        #   - unique
+        tests:
+          - not_null
+          - unique
 
       - name: owner_id
         description: Foreign key to dim_owner.hs_owner_id representing the engagement owner.
         data_type: varchar
-        # tests:
-        #   - not_null
+        tests:
+          - not_null
           # - relationships:
           #     to: ref('dim_owner')
           #     field: hs_owner_id
@@ -30,17 +30,17 @@ models:
         description: Foreign key to dim_contact.hs_contact_id associated with the engagement.
         data_type: varchar
         # tests:
-          # - relationships:
-          #     to: ref('dim_contact')
-          #     field: hs_contact_id
+        # - relationships:
+        #     to: ref('dim_contact')
+        #     field: hs_contact_id
 
       - name: company_id
         description: Foreign key to dim_company.hs_company_id associated with the engagement.
         data_type: varchar
         # tests:
-          # - relationships:
-          #     to: ref('dim_company')
-          #     field: hs_company_id
+        # - relationships:
+        #     to: ref('dim_company')
+        #     field: hs_company_id
 
       - name: created_date_key
         description: Foreign key to dim_date.date_key derived from engagement created_date.
@@ -63,17 +63,17 @@ models:
         description: Foreign key to dim_deal.hs_deal_id associated with the engagement (if applicable).
         data_type: varchar
         # tests:
-          # - relationships:
-          #     to: ref('dim_deal')
-          #     field: hs_deal_id
+        # - relationships:
+        #     to: ref('dim_deal')
+        #     field: hs_deal_id
 
       - name: associated_ticket_key
         description: Foreign key to dim_ticket.hs_ticket_id associated with the engagement (if applicable).
         data_type: varchar
         # tests:
-          # - relationships:
-          #     to: ref('dim_ticket')
-          #     field: hs_ticket_id
+        # - relationships:
+        #     to: ref('dim_ticket')
+        #     field: hs_ticket_id
 
       - name: last_modified_date
         description: Latest known modification timestamp from the source (falls back to created_date if absent).
