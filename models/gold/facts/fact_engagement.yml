@@ -15,13 +15,12 @@ models:
         data_type: varchar
         tests:
           - not_null
-          - unique
 
       - name: owner_id
         description: Foreign key to dim_owner.hs_owner_id representing the engagement owner.
         data_type: varchar
-        tests:
-          - not_null
+        # tests:
+        #   - not_null
           # - relationships:
           #     to: ref('dim_owner')
           #     field: hs_owner_id

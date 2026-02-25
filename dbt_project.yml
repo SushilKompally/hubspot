@@ -1,7 +1,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: "hubspot"
+name: "my_hubspot_project"
 version: "1.0.0"
 config-version: 2
 
@@ -47,41 +47,39 @@ vars:
   silver_target_timestamp_col: "{{ env_var('TARGET_TIMESTAMP_COL', 'last_modified_date') }}"
 
   # for {{ var('source_database_name') }}
-  source_database_name: "hubspot_db"
+  source_database_name: "HUBSPOT_DB"
 
   
   source_instances:
     - name: "hubspot1"
-      source_database_name: "hubspot_db"
+      source_database_name: "HUBSPOT_DB"
       source_schema_name: "hubspot1"
       tool_name: "fivetran"
     - name: "hubspot2"
-      source_database_name: "hubspot_db"
+      source_database_name: "HUBSPOT_DB"
       source_schema_name: "hubspot2"
       tool_name: "stitch"
 
 models:
-  hubspot:
-    hubspot:
-      silver:
-        +database:  "{{ env_var('DBT_hubspot', 'DATA_PLATFORM_DB') }}"
-        +schema: "{{ env_var('DBT_SILVER_SCHEMA', 'SILVER_HUBSPOT') }}"
-        +materialized: "incremental"
-        +on_schema_change: append_new_columns
+  my_hubspot_project:
+    silver:
+      +database:  "{{ env_var('DBT_DEST_DATABASE', 'DATA_PLATFORM_DB') }}"
+      +schema: "{{ env_var('DBT_SILVER_SCHEMA', 'SILVER_HUBSPOT') }}"
+      +materialized: "incremental"
+      +on_schema_change: append_new_columns
         
         
-      gold:
-        +database:  "{{ env_var('DBT_hubspot', 'DATA_PLATFORM_DB') }}"
-        +schema: "{{ env_var('DBT_GOLD_SCHEMA', 'GOLD_HUBSPOT') }}"
-        +materialized: "incremental"
-        +on_schema_change: append_new_columns
+    gold:
+      +database:  "{{ env_var('DBT_DEST_DATABASE', 'DATA_PLATFORM_DB') }}"
+      +schema: "{{ env_var('DBT_GOLD_SCHEMA', 'GOLD_HUBSPOT') }}"
+      +materialized: "incremental"
+      +on_schema_change: append_new_columns
         
    
 snapshots:
-  hubspot:
-    hubspot:
-      +target_database: "{{ env_var('DBT_hubspot', 'DATA_PLATFORM_DB') }}"
-      +target_schema: "{{ env_var('DBT_SNAPSHOT_SCHEMA', 'SNAPSHOT_HUBSPOT') }}"
+  my_hubspot_project:
+      +target_database: "{{ env_var('DBT_DEST_DATABASE', 'DATA_PLATFORM_DB') }}"
+      +target_schema: "{{ env_var('DBT_SNAPSHOT_SCHEMA', 'HUBSPOT_SNAPSHOTS') }}"
       +strategy: timestamp
       +invalidate_hard_deletes: true
    
